@@ -13,6 +13,7 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
+
         for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
@@ -20,12 +21,20 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        // TODO check if resume not present
-        storage[size] = r;
-        size++;
+
+        if (storage.length <= size) {
+            System.out.println("ERROR: not enough space in storage");
+        } else if (!isPresent(r)) {
+            storage[size] = r;
+            System.out.println("Resume " + r.getUuid() + " was added to storage");
+            size++;
+        } else {
+            System.out.println("Resume " + r.getUuid() + " already exist in storage");
+        }
     }
 
     public Resume get(String uuid) {
+
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return storage[i];
@@ -39,7 +48,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        // TODO check if resume present
+
         if (isPresent(get(uuid))) {
             for (int i = 0; i < size; i++) {
                 if (storage[i].getUuid().equals(uuid)) {
