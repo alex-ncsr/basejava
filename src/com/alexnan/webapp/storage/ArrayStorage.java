@@ -9,7 +9,7 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
 
-    private Resume[] storage = new Resume[10000];
+    private final Resume[] storage = new Resume[10000];
     private int size = 0;
 
     public void clear() {
@@ -20,6 +20,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
+        // TODO check if resume not present
         storage[size] = r;
         size++;
     }
@@ -33,13 +34,20 @@ public class ArrayStorage {
         return null;
     }
 
+    public void update(Resume resume) {
+
+    }
+
     public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                storage[i] = storage[size - 1];
-                storage[size - 1] = null;
-                size--;
-                break;
+        // TODO check if resume present
+        if (isPresent(get(uuid))) {
+            for (int i = 0; i < size; i++) {
+                if (storage[i].getUuid().equals(uuid)) {
+                    storage[i] = storage[size - 1];
+                    storage[size - 1] = null;
+                    size--;
+                    break;
+                }
             }
         }
     }
@@ -56,4 +64,16 @@ public class ArrayStorage {
 
         return size;
     }
+
+    boolean isPresent(Resume resume) {
+
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(resume.getUuid())) {
+                return true;
+            }
+        }
+        System.out.println("Resume " + resume.getUuid() + " does not exist");
+        return false;
+    }
 }
+
