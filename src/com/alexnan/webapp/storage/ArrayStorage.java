@@ -1,3 +1,7 @@
+package com.alexnan.webapp.storage;
+
+import com.alexnan.webapp.model.Resume;
+
 import java.util.Arrays;
 
 /**
@@ -5,34 +9,33 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
 
+    private Resume[] storage = new Resume[10000];
     private int size = 0;
 
-    Resume[] storage = new Resume[10000];
-
-    void clear() {
+    public void clear() {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
         size = 0;
     }
 
-    void save(Resume r) {
+    public void save(Resume r) {
         storage[size] = r;
         size++;
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return storage[i];
             }
         }
         return null;
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 storage[i] = storage[size - 1];
                 storage[size - 1] = null;
                 size--;
@@ -44,11 +47,13 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
+
         return Arrays.copyOf(storage, size);
     }
 
-    int size() {
+    public int size() {
+
         return size;
     }
 }
