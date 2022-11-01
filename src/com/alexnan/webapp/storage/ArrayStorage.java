@@ -9,20 +9,19 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
 
-    private final Resume[] storage = new Resume[10000];
+    protected static final int STORAGE_LIMIT = 1000;
+    protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
 
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, null);
         size = 0;
     }
 
     public void save(Resume r) {
 
-        if (storage.length <= size) {
+        if (STORAGE_LIMIT <= size) {
             System.out.println("ERROR: not enough space in storage");
         } else if (!isPresent(r)) {
             storage[size] = r;
