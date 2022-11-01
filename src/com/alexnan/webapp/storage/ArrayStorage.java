@@ -23,7 +23,7 @@ public class ArrayStorage {
 
         if (STORAGE_LIMIT <= size) {
             System.out.println("ERROR: not enough space in storage");
-        } else if (!isPresent(r)) {
+        } else if (findIndex(r) == -1) {
             storage[size] = r;
             System.out.println("Resume " + r.getUuid() + " was added to storage");
             size++;
@@ -34,35 +34,44 @@ public class ArrayStorage {
 
     public Resume get(String uuid) {
 
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return storage[i];
-            }
+        Resume resume = new Resume();
+        resume.setUuid(uuid);
+        if (findIndex(resume) != -1) {
+            return storage[findIndex(resume)];
         }
         return null;
+
+//        for (int i = 0; i < size; i++) {
+//            if (storage[i].getUuid().equals(uuid)) {
+//                return storage[i];
+//            }
+//        }
+//        return null;
     }
 
     public void update(Resume resume) {
 
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(resume.getUuid())) {
-                storage[i] = resume;
-            }
-        }
+        findIndex(resume);
+        storage[findIndex(resume)] = resume;
+//        for (int i = 0; i < size; i++) {
+//            if (storage[i].getUuid().equals(resume.getUuid())) {
+//                storage[i] = resume;
+//            }
+//        }
     }
 
     public void delete(String uuid) {
 
-        if (isPresent(get(uuid))) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid().equals(uuid)) {
-                    storage[i] = storage[size - 1];
-                    storage[size - 1] = null;
-                    size--;
-                    break;
-                }
-            }
-        }
+//        if (isPresent(get(uuid))) {
+//            for (int i = 0; i < size; i++) {
+//                if (storage[i].getUuid().equals(uuid)) {
+//                    storage[i] = storage[size - 1];
+//                    storage[size - 1] = null;
+//                    size--;
+//                    break;
+//                }
+//            }
+//        }
     }
 
     /**
@@ -78,15 +87,25 @@ public class ArrayStorage {
         return size;
     }
 
-    boolean isPresent(Resume resume) {
+//    boolean isPresent(Resume resume) {
+//
+//        for (int i = 0; i < size; i++) {
+//            if (storage[i].getUuid().equals(resume.getUuid())) {
+//                return true;
+//            }
+//        }
+//        System.out.println("Resume " + resume.getUuid() + " does not exist");
+//        return false;
+//    }
 
+    public int findIndex(Resume resume) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(resume.getUuid())) {
-                return true;
+                return i;
             }
         }
         System.out.println("Resume " + resume.getUuid() + " does not exist");
-        return false;
+        return -1;
     }
 }
 
