@@ -29,21 +29,21 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void delete(String uuid) {
-//        int index = findIndex(uuid);
-//        if (index > 0) {
-//            removeResume(index);
-//            storage[size - 1] = null;
-//            size--;
-//        }
-
         int index = findIndex(uuid);
-        if (index < 0) {
-            System.out.println("Resume " + uuid + " not exist");
-        } else {
+        if (index > 0) {
             removeResume(index);
             storage[size - 1] = null;
             size--;
         }
+
+//        int index = findIndex(uuid);
+//        if (index < 0) {
+//            System.out.println("Resume " + uuid + " not exist");
+//        } else {
+//            removeResume(index);
+//            storage[size - 1] = null;
+//            size--;
+//        }
     }
 
     public void update(Resume resume) {
@@ -55,18 +55,18 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public Resume get(String uuid) {
-//        int index = findIndex(uuid);
-//        if (index > 0) {
-//            return storage[index];
-//        }
-//        return null;
-
         int index = findIndex(uuid);
-        if (index < 0) {
-            System.out.println("Resume " + uuid + " not exist");
-            return null;
+        if (index > 0) {
+            return storage[index];
         }
-        return storage[index];
+        return null;
+
+//        int index = findIndex(uuid);
+//        if (index < 0) {
+//            System.out.println("Resume " + uuid + " not exist");
+//            return null;
+//        }
+//        return storage[index];
     }
 
     /**
