@@ -8,12 +8,12 @@ import com.alexnan.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void extractItemFromArray(int index) {
+    protected void removeResume(int index) {
         storage[index] = storage[size - 1];
     }
 
     @Override
-    public void insertItemInArray(Resume r, int index) {
+    public void insertResume(Resume r, int index) {
         storage[size] = r;
     }
 

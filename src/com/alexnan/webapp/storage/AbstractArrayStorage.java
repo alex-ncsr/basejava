@@ -21,7 +21,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("ERROR: not enough space in storage");
         } else {
             if (index < 0) {
-                insertItemInArray(r, index);
+                insertResume(r, index);
                 System.out.println("Resume " + r.getUuid() + " was added to storage");
                 size++;
             } else {
@@ -33,15 +33,15 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = findIndex(uuid);
         if (index > 0) {
-            extractItemFromArray(index);
+            removeResume(index);
             storage[size - 1] = null;
             size--;
         }
     }
 
-    protected abstract void extractItemFromArray(int index);
+    protected abstract void removeResume(int index);
 
-    public abstract void insertItemInArray(Resume r, int index);
+    public abstract void insertResume(Resume r, int index);
 
     public void update(Resume resume) {
         storage[findIndex(resume.getUuid())] = resume;
