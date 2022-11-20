@@ -1,7 +1,6 @@
 package com.alexnan.webapp;
 
 import com.alexnan.webapp.model.Resume;
-import com.alexnan.webapp.storage.AbstractArrayStorage;
 import com.alexnan.webapp.storage.SortedArrayStorage;
 
 /**
@@ -9,7 +8,7 @@ import com.alexnan.webapp.storage.SortedArrayStorage;
  */
 public class MainTestArrayStorage {
 //    private static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
-private static final AbstractArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
+private static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         final Resume r1 = new Resume();
@@ -25,6 +24,8 @@ private static final AbstractArrayStorage ARRAY_STORAGE = new SortedArrayStorage
         ARRAY_STORAGE.save(r1);
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
+        System.out.println("Get r2: " + ARRAY_STORAGE.get(r2.getUuid()));
+        System.out.println("Get r3: " + ARRAY_STORAGE.get(r3.getUuid()));
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
