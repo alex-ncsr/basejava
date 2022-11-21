@@ -1,5 +1,8 @@
 package com.alexnan.webapp.storage;
 
+import com.alexnan.webapp.exception.ExistStorageException;
+import com.alexnan.webapp.exception.NotExistStorageException;
+import com.alexnan.webapp.exception.StorageException;
 import com.alexnan.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -10,6 +13,10 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
+    public int size() {
+        return size;
+    }
+
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -18,55 +25,41 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
         int index = findIndex(r.getUuid());
         if (index >= 0) {
-            System.out.println("Resume " + r.getUuid() + " already exist in storage");
+            throw new ExistStorageException(r.getUuid());
         } else if (size == STORAGE_LIMIT) {
-            System.out.println("Storage overflow");
+            throw new StorageException("Storage overflow", r.getUuid());
         } else {
             insertResume(r, index);
-            System.out.println("Resume " + r.getUuid() + " was added to storage");
             size++;
+        }
+    }
+
+    public void update(Resume r) {
+        int index = findIndex(r.getUuid());
+        if (index < 0) {
+            throw new NotExistStorageException(r.getUuid());
+        } else {
+            storage[index] = r;
         }
     }
 
     public void delete(String uuid) {
         int index = findIndex(uuid);
-        if (index > 0) {
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
+        } else {
             removeResume(index);
             storage[size - 1] = null;
             size--;
         }
-
-//        int index = findIndex(uuid);
-//        if (index < 0) {
-//            System.out.println("Resume " + uuid + " not exist");
-//        } else {
-//            removeResume(index);
-//            storage[size - 1] = null;
-//            size--;
-//        }
-    }
-
-    public void update(Resume resume) {
-        storage[findIndex(resume.getUuid())] = resume;
-    }
-
-    public int size() {
-        return size;
     }
 
     public Resume get(String uuid) {
         int index = findIndex(uuid);
-        if (index > 0) {
-            return storage[index];
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
         }
-        return null;
-
-//        int index = findIndex(uuid);
-//        if (index < 0) {
-//            System.out.println("Resume " + uuid + " not exist");
-//            return null;
-//        }
-//        return storage[index];
+        return storage[index];
     }
 
     /**
