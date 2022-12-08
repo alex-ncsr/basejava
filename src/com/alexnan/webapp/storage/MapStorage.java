@@ -4,46 +4,39 @@ import com.alexnan.webapp.model.Resume;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class MapStorage extends AbstractStorage {
 
     private final Map<String, Resume> resumeMap = new HashMap<>();
 
     @Override
-    protected Resume getSearchKey(String uuid) {
-        Set<String> keySet = resumeMap.keySet();
-        for (String s : keySet) {
-            if (s.equals(uuid))
-                return resumeMap.get(s);
-        }
-        return null;
+    protected String getSearchKey(String uuid) {
+        return uuid;
     }
 
     @Override
     protected void doSave(Resume r, Object searchKey) {
-        resumeMap.putIfAbsent(r.getUuid(), r);
-
+        resumeMap.put(r.getUuid(), r);
     }
 
     @Override
     protected Resume doGet(Object searchKey) {
-        return resumeMap.get(searchKey);
+        return resumeMap.get((String) searchKey);
     }
 
     @Override
     protected void doUpdate(Resume r, Object searchKey) {
-        resumeMap.replace(r.getUuid(), r);
+        resumeMap.put(r.getUuid(), r);
     }
 
     @Override
     protected void doDelete(Object searchKey) {
-        resumeMap.remove(searchKey);
+        resumeMap.remove((String) searchKey);
     }
 
     @Override
     protected boolean isExist(Object searchKey) {
-        return searchKey != null;
+        return resumeMap.containsKey((String) searchKey);
     }
 
     @Override
