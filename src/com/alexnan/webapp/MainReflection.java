@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class MainReflection {
     public static void main(String[] args) throws IllegalAccessException, InstantiationException,
             InvocationTargetException, NoSuchMethodException {
-        Resume resume = new Resume();
+        Resume resume = new Resume("Name");
         Field field = resume.getClass().getDeclaredFields()[0];
         field.setAccessible(true);
         System.out.println(field.getName());
