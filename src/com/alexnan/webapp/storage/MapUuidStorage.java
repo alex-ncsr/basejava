@@ -2,7 +2,9 @@ package com.alexnan.webapp.storage;
 
 import com.alexnan.webapp.model.Resume;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MapUuidStorage extends AbstractStorage {
@@ -45,8 +47,9 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume[] getAll() {
-        return resumeMap.values().toArray(new Resume[0]);
+    public List<Resume> doCopyAll() {
+//        return resumeMap.values().toArray(new Resume[0]);
+        return Collections.emptyList();
     }
 
     @Override

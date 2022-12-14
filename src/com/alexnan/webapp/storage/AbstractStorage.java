@@ -4,6 +4,9 @@ import com.alexnan.webapp.exception.ExistStorageException;
 import com.alexnan.webapp.exception.NotExistStorageException;
 import com.alexnan.webapp.model.Resume;
 
+import java.util.Collections;
+import java.util.List;
+
 public abstract class AbstractStorage implements Storage {
     public void save(Resume r) {
         Object searchKey = getNotExistedSearchKey(r.getUuid());
@@ -40,6 +43,16 @@ public abstract class AbstractStorage implements Storage {
         }
         return searchKey;
     }
+
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> list = doCopyAll();
+        Collections.sort(list);
+        return list;
+    }
+
+    protected abstract List<Resume> doCopyAll();
+
 
     protected abstract Object getSearchKey(String uuid);
 
